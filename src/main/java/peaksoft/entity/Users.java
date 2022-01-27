@@ -65,15 +65,11 @@ public class Users {
 
     @Override
     public String toString() {
-        System.out.println("#######################################################");
-        System.out.println("Id\t|"+"\tName\t|"+"\tsurName\t\t|"+"\tage\t|"+" nationality |");
-        System.out.println("----+-----------+---------------+-------+-------------+");
         System.out.println(id + "\t|\t" +
                 name + "\t\t|\t" +
                 surName + "\t|\t" +
                 age + "\t| " +
                 nationality +"\t  |");
-        System.out.println("#######################################################\n");
         return "";
     }
 }

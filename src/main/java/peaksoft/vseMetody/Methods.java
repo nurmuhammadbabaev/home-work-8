@@ -8,27 +8,30 @@ import peaksoft.hibernate.Hibernate;
 import java.util.List;
 import java.util.Scanner;
 
-public class Methods {
+public class Methods implements UserDao {
 
     static Scanner scanner=new Scanner(System.in);
-
-    public static long create(Users users){
-
-        Session session= Hibernate.getSession().openSession();
+    public long create(List<Users> users) {
+        Session session = Hibernate.getSession().openSession();
         session.beginTransaction();
-        session.save(users);
+
+        for (Users user : users) {
+            session.save(user);
+        }
         session.getTransaction().commit();
         session.close();
-
         System.out.println("\nДобавлено новый пользователь!! \tThis is a Users Table:");
-
+        System.out.println("#######################################################");
+        System.out.println("Id\t|"+"\tName\t|"+"\tsurName\t\t|"+"\tage\t|"+" nationality |");
+        System.out.println("----+-----------+---------------+-------+-------------+");
         System.out.println(users);
+        System.out.println("#######################################################");
 
-
-        return users.getId();
+        return users.size();
     }
 
-    public static List<Users> reade(){
+
+    public  List<Users> reade(String name, int age){
         Session session=Hibernate.getSession().openSession();
         session.beginTransaction();
         List<Users>users=session.createQuery(" FROM Users WHERE age>20 and name IN ('Aza')").getResultList();
@@ -36,7 +39,7 @@ public class Methods {
         session.close();
         return  users;
     }
-    public static void update(){
+    public  void update(String name){
         Session session=Hibernate.getSession().openSession();
         session.beginTransaction();
 
@@ -46,7 +49,7 @@ public class Methods {
         session.close();
         System.out.println("Successfully update!\tПроверьте SQL Таблицу чтобы узнать изменение!");
     }
-    public static  void cleane(){
+    public  void cleane(String name){
         Session session=Hibernate.getSession().openSession();
         session.beginTransaction();
         session.createQuery("DELETE Users WHERE name='Aza'").executeUpdate();
@@ -54,7 +57,7 @@ public class Methods {
         session.close();
         System.out.println("Successfully update!\tПроверьте SQL Таблицу чтобы узнать изменение!");
     }
-    public static void delete(){
+    public  void delete(){
         Session session=Hibernate.getSession().openSession();
         session.beginTransaction();
         session.createQuery("DELETE Users").executeUpdate();
@@ -62,5 +65,5 @@ public class Methods {
         session.close();
         System.out.println("Successfully update!\tПроверьте SQL Таблицу чтобы узнать изменение!");
     }
-    
+
 }
